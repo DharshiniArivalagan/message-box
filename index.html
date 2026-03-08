@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Message Box</title>
+<title>Message Box - Character Counter</title>
 
 <style>
+
+/* Page styling */
 
 body{
 margin:0;
@@ -17,24 +19,32 @@ font-family:Arial, Helvetica, sans-serif;
 background:linear-gradient(135deg,#cfd9df,#e2ebf0);
 }
 
+/* Message box container */
+
 .container{
 background:white;
-width:400px;
+width:420px;
 padding:35px;
 border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+box-shadow:0 12px 30px rgba(0,0,0,0.15);
 }
 
-h1{
+/* Title */
+
+h2{
 text-align:center;
 margin-bottom:5px;
 }
 
-.sub{
+/* subtitle */
+
+.max-text{
 text-align:center;
 color:gray;
 margin-bottom:20px;
 }
+
+/* label */
 
 label{
 font-size:14px;
@@ -42,8 +52,10 @@ color:gray;
 letter-spacing:1px;
 }
 
+/* textarea */
+
 textarea{
-width:90%;
+width:100%;
 height:120px;
 margin-top:10px;
 border-radius:12px;
@@ -52,55 +64,96 @@ padding:15px;
 font-size:16px;
 outline:none;
 resize:none;
+transition:0.3s;
 }
 
+/* focus effect */
+
 textarea:focus{
-border-color:#5a6bff;
+border-color:#4e5dff;
+box-shadow:0 0 6px rgba(78,93,255,0.4);
 }
+
+/* counter section */
 
 .counter{
 display:flex;
 justify-content:space-between;
 margin-top:10px;
-color:gray;
 font-size:14px;
+color:#555;
+}
+
+/* warning message */
+
+.warning{
+color:red;
+font-size:14px;
+margin-top:8px;
+display:none;
+font-weight:bold;
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
 <div class="container">
 
-<h1>Message Box</h1>
-<p class="sub">200 characters max</p>
+<h2>Message Box</h2>
+<p class="max-text">200 characters max</p>
 
 <label>YOUR MESSAGE</label>
 
-<textarea id="message" placeholder="Enter your message" maxlength="200"></textarea>
+<textarea id="messageInput" placeholder="Enter your message"></textarea>
 
 <div class="counter">
-<span><span id="count">0</span> / 200 characters</span>
-<span id="remain">200 remaining</span>
+<span id="characterCount">0 / 200 characters</span>
+<span id="remainingCount">200 remaining</span>
 </div>
+
+<p class="warning" id="warningMessage">
+⚠ Character limit reached! You cannot type more.
+</p>
 
 </div>
 
 
 <script>
 
-const message=document.getElementById("message");
-const count=document.getElementById("count");
-const remain=document.getElementById("remain");
+/* Selecting elements */
 
-message.addEventListener("input",function(){
+const textarea = document.getElementById("messageInput");
+const charCount = document.getElementById("characterCount");
+const remainingCount = document.getElementById("remainingCount");
+const warning = document.getElementById("warningMessage");
 
-let length=message.value.length;
+const maxLimit = 200;
 
-count.innerText=length;
-remain.innerText=(200-length)+" remaining";
+
+/* Event listener for typing */
+
+textarea.addEventListener("input", function(){
+
+let currentLength = textarea.value.length;
+
+/* Prevent typing more than 200 */
+
+if(currentLength > maxLimit){
+textarea.value = textarea.value.substring(0, maxLimit);
+currentLength = maxLimit;
+warning.style.display = "block";
+}
+else{
+warning.style.display = "none";
+}
+
+/* Update counters */
+
+charCount.textContent = currentLength + " / " + maxLimit + " characters";
+remainingCount.textContent = (maxLimit - currentLength) + " remaining";
 
 });
 
