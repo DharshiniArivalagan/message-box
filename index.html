@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Message Box</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:Arial, Helvetica, sans-serif;
+background:linear-gradient(135deg,#cfd9df,#e2ebf0);
+}
+
+.container{
+background:white;
+width:400px;
+padding:35px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+margin-bottom:5px;
+}
+
+.sub{
+text-align:center;
+color:gray;
+margin-bottom:20px;
+}
+
+label{
+font-size:14px;
+color:gray;
+letter-spacing:1px;
+}
+
+textarea{
+width:90%;
+height:120px;
+margin-top:10px;
+border-radius:12px;
+border:2px solid #7c8cff;
+padding:15px;
+font-size:16px;
+outline:none;
+resize:none;
+}
+
+textarea:focus{
+border-color:#5a6bff;
+}
+
+.counter{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+color:gray;
+font-size:14px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>Message Box</h1>
+<p class="sub">200 characters max</p>
+
+<label>YOUR MESSAGE</label>
+
+<textarea id="message" placeholder="Enter your message" maxlength="200"></textarea>
+
+<div class="counter">
+<span><span id="count">0</span> / 200 characters</span>
+<span id="remain">200 remaining</span>
+</div>
+
+</div>
+
+
+<script>
+
+const message=document.getElementById("message");
+const count=document.getElementById("count");
+const remain=document.getElementById("remain");
+
+message.addEventListener("input",function(){
+
+let length=message.value.length;
+
+count.innerText=length;
+remain.innerText=(200-length)+" remaining";
+
+});
+
+</script>
+
+</body>
+</html>
